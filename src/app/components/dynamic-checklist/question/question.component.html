@@ -1,0 +1,7 @@
+<div class="question">
+  <input [(ngModel)]="question.content" placeholder="Include a new question or checklist item">
+  @for (answer of question.answers; track $index) {
+    <app-answer [answer]="question.answers[$index]"></app-answer>
+  }
+  <button (click)="addAnswer()">Add new answer</button>
+</div>

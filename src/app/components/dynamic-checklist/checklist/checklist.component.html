@@ -1,0 +1,9 @@
+<div class="checklist">
+  <h1>Checklist</h1>
+  @for (question of questions; track $index) {
+    <app-question [question]="question" [index]="$index"></app-question>
+  }
+  <button (click)="addQuestion()">Save and add new question</button>
+</div>
+
+<button (click)="saveChecklist()">SAVE CHECKLIST</button>
