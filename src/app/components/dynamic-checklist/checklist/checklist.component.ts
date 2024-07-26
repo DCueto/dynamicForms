@@ -11,10 +11,22 @@ import { QuestionComponent } from '../question/question.component';
 })
 export class ChecklistComponent {
   // implement interface for array of questions
-  questions: any[] = [{ answers: [] }];
+  questions: any[] = [
+    {
+      answers: [
+        { type: 'true', content: ''},
+        { type: 'false', content: ''}
+      ]
+    }
+  ];
 
   addQuestion() {
-    this.questions.push({ answers: [] });
+    this.questions.push({
+      answers: [
+        { type: 'true', content: ''},
+        { type: 'false', content: ''}
+      ]
+    });
     console.log(this.questions);
   }
 

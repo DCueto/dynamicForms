@@ -9,5 +9,5 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './answer.component.scss'
 })
 export class AnswerComponent {
-  @Input() answer: any = { type: 'Yes', content: '' }
+  @Input() answer: any = { type: 'true', content: '' }
 }

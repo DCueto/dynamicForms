@@ -14,8 +14,7 @@ export class QuestionComponent {
   @Input() question: any;
   @Input() index!: number;
 
-
   addAnswer(){
-    this.question.answers.push({ type: 'Yes', content: ''});
+    this.question.answers.push({ type: 'true', content: ''});
   }
 }
