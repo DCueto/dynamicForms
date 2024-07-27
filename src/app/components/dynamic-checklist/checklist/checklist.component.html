@@ -1,9 +1,16 @@
 <div class="checklist">
-  <h1>Checklist</h1>
-  @for (question of questions; track $index) {
-    <app-question [question]="question" [index]="$index"></app-question>
-  }
-  <button (click)="addQuestion()">Save and add new question</button>
-</div>
 
-<button (click)="saveChecklist()">SAVE CHECKLIST</button>
+  <h1>Checklist</h1>
+  <form [formGroup]="checkListForm">
+    <div formArrayName="questions">
+      <!-- questions are the get function that returns all questions from ts file -->
+      @for (question of questions.controls; track $index) {
+        <app-question [questionForm]="getQuestionFormGroup($index)"></app-question>
+      }
+    </div>
+  </form>
+
+  <button (click)="addQuestion()">Save and add new question</button>
+  <button (click)="saveChecklist()">SAVE CHECKLIST</button>
+
+</div>

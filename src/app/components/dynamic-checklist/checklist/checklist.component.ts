@@ -1,38 +1,65 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionComponent } from '../question/question.component';
 
 @Component({
   selector: 'app-checklist',
   standalone: true,
-  imports: [FormsModule, QuestionComponent],
+  imports: [FormsModule, QuestionComponent, ReactiveFormsModule],
   templateUrl: './checklist.component.html',
   styleUrl: './checklist.component.scss'
 })
 export class ChecklistComponent {
-  // implement interface for array of questions
-  questions: any[] = [
-    {
-      answers: [
-        { type: 'true', content: ''},
-        { type: 'false', content: ''}
-      ]
-    }
-  ];
 
-  addQuestion() {
-    this.questions.push({
-      answers: [
-        { type: 'true', content: ''},
-        { type: 'false', content: ''}
-      ]
+  checkListForm: FormGroup;
+
+  // injects formBuilder service and initializes the checklist Form Group with a Form Array with one Question
+  constructor(private fb: FormBuilder) {
+    this.checkListForm = this.fb.group({
+      questions: this.fb.array([ this.createQuestion() ])
     });
-    console.log(this.questions);
   }
+
+  // get all questions so you can iterate through at html
+  get questions() {
+    return this.checkListForm.get('questions') as FormArray;
+  }
+
+  // get question form group
+  getQuestionFormGroup(index: number): FormGroup {
+    return this.questions.at(index) as FormGroup;
+  }
+
+  // generates new question
+  createQuestion(): FormGroup {
+    return this.fb.group({
+      content: [''],
+      answers: this.fb.array([
+        this.createAnswer(),
+        this.createAnswer()
+      ])
+    });
+  }
+
+  // generates new answer
+  createAnswer(): FormGroup {
+    return this.fb.group({
+      type: ['true'],
+      content: ['']
+    });
+  }
+
+
+  // event that adds new question to checklistFormGroup
+  addQuestion(){
+    this.questions.push(this.createQuestion());
+    console.log( this.checkListForm );
+  }
+
 
   // Send to endpoint all data for backend api to generate checklist template
   saveChecklist() {
-    const checklistData = { questions: this.questions };
+    const checklistData = this.checkListForm.value;
     console.log( checklistData );
   }
 
