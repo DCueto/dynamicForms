@@ -1,7 +1,9 @@
-<div class="question">
-  <input [(ngModel)]="question.content" placeholder="Include a new question or checklist item">
-  @for (answer of question.answers; track $index) {
-    <app-answer [answer]="question.answers[$index]"></app-answer>
-  }
+<div class="question" [formGroup]="questionForm">
+  <input formControlName="content" placeholder="Include a new question or checklist item">
+  <div formArrayName="answers">
+    @for (answer of answers.controls; track $index) {
+      <app-answer [answerForm]="getAnswerFormGroup($index)"></app-answer>
+    }
+  </div>
   <button (click)="addAnswer()">Add new answer</button>
 </div>
